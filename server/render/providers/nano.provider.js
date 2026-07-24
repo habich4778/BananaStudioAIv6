@@ -1,33 +1,39 @@
-async function render({
-  prompt,
-  modelImage,
-  productImage,
-}) {
-  console.log("");
-  console.log("🎨 Tensor.Art Manual Render");
-  console.log("--------------------------------");
+const BaseProvider = require("./base.provider");
 
-  console.log("Model :", modelImage.originalname);
-  console.log("Product :", productImage.originalname);
-  console.log("--------------------------------");
-  console.log(prompt);
-  console.log("--------------------------------");
+class NanoProvider extends BaseProvider {
+  getName() {
+    return "tensor-art";
+  }
 
-  return {
-    provider: "tensor-art",
-
-    status: "waiting-render",
-
+  async render({
     prompt,
+    modelImage,
+    productImage,
+  }) {
+    console.log("");
+    console.log("🎨 Tensor.Art Manual Render");
+    console.log("--------------------------------");
 
-    action: "open-tensor-art",
+    console.log("Model :", modelImage.originalname);
+    console.log("Product :", productImage.originalname);
+    console.log("--------------------------------");
+    console.log(prompt);
+    console.log("--------------------------------");
 
-    modelName: modelImage.originalname,
+    return {
+      provider: this.getName(),
 
-    productName: productImage.originalname,
-  };
+      status: "waiting-render",
+
+      prompt,
+
+      action: "open-tensor-art",
+
+      modelName: modelImage.originalname,
+
+      productName: productImage.originalname,
+    };
+  }
 }
 
-module.exports = {
-  render,
-};
+module.exports = new NanoProvider();
